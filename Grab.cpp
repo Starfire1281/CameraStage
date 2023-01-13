@@ -18,6 +18,8 @@
     when explicitly released or when the smart pointer object is destroyed.
 */
 
+//Hello Jet Edited this to have an extra line
+
 // Include files to use the pylon API.
 #include "Includes/PylonIncludes.h"
 #include "mex.hpp"
