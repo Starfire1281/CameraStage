@@ -1,18 +1,7 @@
+%Finds corrilation in 2D between 2 same sized images
 function [xShift,yShift] = findShift2Images(a,b)
-% Example code:
-% 
-% N = 128;
-% 
-% [x,y]=meshgrid(-1/2:1/N:1/2-1/N);
-% 
-% f = exp(-(x.^2 + y.^2)/0.05^2);
-% g = circshift(f,[10,-5]);
-% 
-% [xShift,yShift] = findShift2Images(f,g);
-%
+
 % Things to add:
-% 
-% Even odd if statement
 % Sepereate out nfft2 alh nifft2 functions
 
 
@@ -25,9 +14,19 @@ function [xShift,yShift] = findShift2Images(a,b)
 
     [~,idx]=max(CC(:));
     [xShift,yShift] = ind2sub(size(CC),idx);
+    
+    %Test if N and M are even or odd and use that 
+    if mod(N,2) == 0
+        xShift = N/2 + 1 - xShift;
+    else
+        xShift = N/2 + 1.5 - xShift;
+    end
 
-    xShift = N/2+1-xShift;
-    yShift = M/2+1-yShift;
+    if mod(M,2) == 0
+        yShift = M/2 + 1 - yShift;
+    else
+        yShift = M/2 + 1.5 - yShift;
+    end
 
 end
 
