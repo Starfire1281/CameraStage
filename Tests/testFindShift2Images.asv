@@ -1,0 +1,13 @@
+%This script is to check that findShift2Images works as expected
+
+testShift = [10,-5];
+%If we have an even gridsize
+Neven = 128;
+[x,y]=meshgrid(-1/2:1/Neven:1/2-1/Neven);
+f = exp(-(x.^2 + y.^2)/0.05^2);
+g = circshift(f,testShift);
+[xShift,yShift] = findShift2Images(f,g);
+disp(xShift);
+disp(yShift);
+if(testShift == [xShift,yShift]){}
+disp("Even shift test successfull")
