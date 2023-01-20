@@ -1,3 +1,4 @@
+%Good script to run to test motor
 %Instanciate stepper motor
 controller=StepperController(50);
 %Try functions
