@@ -11,9 +11,10 @@ function [xShift,yShift] = findShift2Images(a,b)
     B = nfft2(b);
 
     CC = abs( nifft2(A.*conj(B)) );
+    imagesc(CC)
 
     [~,idx]=max(CC(:));
-    [xShift,yShift] = ind2sub(size(CC),idx);
+    [yShift,xShift] = ind2sub(size(CC),idx);
     
     %Test if N and M are even or odd and use that 
     if mod(N,2) == 0
