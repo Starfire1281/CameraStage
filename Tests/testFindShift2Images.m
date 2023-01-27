@@ -34,3 +34,17 @@ if oddPosTestShift == [xShift,yShift]
 else
     disp("Odd positive shift test FAILED");
 end
+
+imageX = 2160;
+imageY = 3840;
+bigShift = [-887,56];
+
+[x,y]=meshgrid(-1/2:1/imageX:1/2-1/imageY);
+f = exp(-(x.^2 + y.^2)/0.05^2);
+g = circshift(f,bigShift);
+[xShift,yShift] = findShift2Images(f,g);
+if bigShift == [xShift,yShift]
+    disp("Image size shift test SUCCESS");
+else
+    disp("Image size shift test FAILED");
+end

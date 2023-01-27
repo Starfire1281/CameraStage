@@ -1,7 +1,7 @@
 classdef StepperController < handle
    properties
       %The activeX controller
-      h
+      activeXcontroller
       %Serial number of our motor controller
       SN
       %The size of the region we want to take an image of, currently in
@@ -9,8 +9,8 @@ classdef StepperController < handle
       regionX
       regionY
       %Current x and y position (In steps)
-      xStep
-      yStep
+      %xStep
+      %yStep
       %Current x and y position in real space
       x
       y
@@ -21,9 +21,6 @@ classdef StepperController < handle
    methods (Access = public)
         %Constructor
         function this = StepperController(stepSize)
-            %Set our activex interface to be public so it can recognize outside events (may not be neccissary, but not hurtful) 
-            %global h;
-            
             %Set parameters for, and instanciate GUI we'll never use
             fpos    = get(0,'DefaultFigurePosition'); % figure default position
             fpos(3) = 650; % figure window size;Width
@@ -33,16 +30,16 @@ classdef StepperController < handle
            'Name','APT GUI');
         
             %Instanciate the controller itself
-            this.h = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'});
+            this.activeXcontroller = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'});
             %Make it start controlling
-            this.h.StartCtrl;
+            this.activeXcontroller.StartCtrl;
             %Give it the serial number of our driver (change the number if hardware changes)
             this.SN = 97101743; % Mr Morale
             %this.SN = 97101761; % Ms Malevolent
 
-            set(this.h,'HWSerialNum', this.SN);
+            set(this.activeXcontroller,'HWSerialNum', this.SN);
             %Blink driver light
-            this.h.Identify;
+            this.activeXcontroller.Identify;
 
             % Events 
             % registerevent does the same thing as instantiating the event in the actxcontrol sequence on ln36
@@ -56,16 +53,16 @@ classdef StepperController < handle
             pause(3);
             
             %Set our class variables
-            this.h.SetJogStepSize(1,stepSize)
-            this.h.SetJogStepSize(2,stepSize)
+            this.activeXcontroller.SetJogStepSize(1,stepSize)
+            this.activeXcontroller.SetJogStepSize(2,stepSize)
         end
         %Moves the motor connected to channel channel through this controler, stepSize steps, in the direction direction
         %Note, direction can be 1 or 2
         %Channel 0 is X channel 1 is Y
         function MoveSampleArray(this,stepSize,channel,direction)
             %global Movevar
-            this.h.SetJogStepSize(channel,stepSize)
-            this.h.MoveJog(channel,direction)
+            this.activeXcontroller.SetJogStepSize(channel,stepSize)
+            this.activeXcontroller.MoveJog(channel,direction)
             %Movevar = true;
             setMovevar(true)
             t=0;
@@ -88,7 +85,7 @@ classdef StepperController < handle
         end
         %Set move size in steps
         function SetMoveSizeSteps(this,stepSize,charDir)
-            this.h.SetJogStepSize(channel,stepSize);
+            this.activeXcontroller.SetJogStepSize(channel,stepSize);
         end
         %Just move without changing step size
         function SimpleMove(this,charDir)
