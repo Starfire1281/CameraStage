@@ -9,11 +9,10 @@ imageFiles = dir([imagesPath '/*.bmp']);
 pathSplit=regexp(imagesPath,'\','split');
 fileName = append(char(pathSplit(1,end)),'.txt');
 fid = fopen(append(".\ConvolutionFiles\",fileName), 'wt' );
-fprintf( fid, 'Yay File! \n');
 
-for i = 1:(length(imageFiles)-1)
-    image1 = imread(append(imagesPath,'\',imageFiles(i).name));
-    image2 = imread(append(imagesPath,'\',imageFiles(i+1).name));
+image1 = imread(append(imagesPath,'\',imageFiles(1).name));
+for i = 2:(length(imageFiles))
+    image2 = imread(append(imagesPath,'\',imageFiles(i).name));
     [a1,a2] = findShift2Images(image1,image2);
     fprintf( fid, '%f,%f\n', a1, a2);
 end

@@ -99,6 +99,7 @@ classdef StepperController < handle
         end
         %Sets the x and y size of the region of sample movenment we want to take a picture of, in number of total steps, however from real space distance
         %function SetRegionSizeSteps(this,)
+        
         %Moves the stepper in a zig-zag along the x and y axis
         function MoveAlongRegion(this,stepSize,regionSize)
             disp(stepSize)
