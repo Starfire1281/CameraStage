@@ -8,7 +8,7 @@ u = unitsConstants.unitsSI;
 %% make Experiment
 
 
-path2Images = "../ImageFiles";
+path2Images = "../ImageFiles/Test";
 imageX = 2160;
 imageY = 3840;
 
@@ -55,4 +55,5 @@ ex.dimensionsDataY = imageY;
 %% make diffuser -------------------------------------------------------- %
 df = diffuserClass(ex);
 %% make object ---------------------------------------------------------- %
+%Problem
 wv = waveClass(ex);
