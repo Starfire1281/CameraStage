@@ -3,7 +3,6 @@ disp("Please select the folder you would like to convolve");
 imagesPath = uigetdir("./ImageFiles");
 disp(imagesPath);
 imageFiles = dir([imagesPath '/*.bmp']);
-%convolutionsPath 
 
 %Open file to write to
 pathSplit=regexp(imagesPath,'\','split');
