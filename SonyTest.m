@@ -1,4 +1,4 @@
-% vid = videoinput('winvideo',1,'Y16 _1920x1080')
+% vid = videoinput('winvideo',1,1)
 % src = getselectedsource(vid);
 % set(src,'FrameRate','15.0000');
 % set(src,'Exposure',0.001);
@@ -9,8 +9,8 @@
 % %imshow(img)
 
 
-camera = sonyDMM37UX226;
-camera.initialize;
+%camera = sonyDMM37UX226;
+%camera.initialize;
 
 camera.exposureTime = 0.001;
 
@@ -29,4 +29,4 @@ axis xy image off;
 toc
 
 
-camera.uninitialize;
+% camera.uninitialize;
