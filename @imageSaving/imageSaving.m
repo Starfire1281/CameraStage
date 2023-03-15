@@ -8,14 +8,14 @@ classdef imageSaving < handle
     end
 
     methods
-        function this = imageSaving
+        function this = imageSaving()
         end
 
         function setSampleFolder(this,varargin)
             if nargin == 1
                 % uigetfile
                 % uigetdir
-                temp = input("Please enter the sample's image folder name","s");
+                temp = input("Please input desired image-folder","s");
             elseif nargin == 2
                 temp = varargin{1};
             else
