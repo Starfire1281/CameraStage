@@ -1,5 +1,6 @@
-classdef StepperController < handle
-   properties
+classdef stepperController < handle 
+
+    properties
       %The activeX controller
       activeXcontroller
       %Serial number of our motor controller
@@ -22,7 +23,7 @@ classdef StepperController < handle
    end
    methods (Access = public)
         %Constructor
-        function this = StepperController(stepSize)
+        function this = stepperController(stepSize)
             %Set parameters for, and instanciate GUI we'll never use
             fpos    = get(0,'DefaultFigurePosition'); % figure default position
             fpos(3) = 650; % figure window size;Width
@@ -32,7 +33,7 @@ classdef StepperController < handle
            'Name','APT GUI');
         
             %Instanciate the controller itself
-            this.activeXcontroller = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'});
+            this.activeXcontroller = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'}); %#ok<ACTXC> 
             %Make it start controlling
             this.activeXcontroller.StartCtrl;
             %Give it the serial number of our driver (change the number if hardware changes)
@@ -48,7 +49,7 @@ classdef StepperController < handle
             %this.h.registerevent({'MoveComplete' @MoveHandler});
             %this.h.isevent('HWResponse') %is testing to see if the event actually exists
             
-            %Shows us the meathods of our activeXcontroller
+            %Shows us the methods of our activeXcontroller
             %this.h.methods()
 
             %Wait for gui to load
@@ -86,7 +87,7 @@ classdef StepperController < handle
             pause(1);
         end
         %Set move size in steps
-        function setMoveSizeSteps(this,stepSize,charDir)
+        function setMoveSizeSteps(this,stepSize)
             this.activeXcontroller.SetJogStepSize(channel,stepSize);
         end
         %Just move without changing step size
@@ -136,27 +137,3 @@ classdef StepperController < handle
 %         end
    end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
