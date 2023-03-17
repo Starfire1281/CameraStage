@@ -2,12 +2,13 @@ classdef sonyDMM37UX226 < handle
 
     properties
     
-        format = 'Y16 _1920x1080';
+        format = 'Y16 _1920x1080' %'Y800_3840x2160'%'Y16 _3840x2160'%;
         videoObject
         videoSource
-        exposureTime = 0.0001;
+        exposureTime = 0.0000000001;
         framesPerTrigger = 1;
         dataImage=[];
+        n = 0;
     
     end
     
@@ -16,16 +17,19 @@ classdef sonyDMM37UX226 < handle
         function this = sonyDMM37UX226
         end
     
+        % Pass in a number if there are multiple cameras connected to the
+        % same computer
         function initialize(this)
-    
             this.videoObject = videoinput('winvideo',1,this.format);
+            disp("Made video object")
+            
             this.videoSource = getselectedsource(this.videoObject);
             
             set(this.videoObject,'triggerRepeat',Inf);
             triggerconfig(this.videoObject,'manual');
             set(this.videoObject,'FramesPerTrigger',this.framesPerTrigger);
     
-            set(this.videoSource,'FrameRate','5.0000');
+            set(this.videoSource,'FrameRate','15.0000');
             set(this.videoSource,'Exposure',this.exposureTime);
     
     
@@ -42,7 +46,8 @@ classdef sonyDMM37UX226 < handle
     
     
         function uninitialize(this)
-            stop(this.videoObject);
+            %stop(this.videoObject);
+            delete(this.videoObject);
         end
     
         function grabImage(this)

@@ -1,9 +1,12 @@
-stepper = stepperController(50);
+imaqreset;
+
+stepper = StepperController(50);
 camera = sonyDMM37UX226;
 imgUtil = imageSaving;
 
-takeSampleUtil.setup(imgUtil,"TestFolder");
+camera.initialize();
+takeSampleUtil.setup(imgUtil,"ActualTestFolderMarch17");
 
-takeSampleUtil.sampleAndImg(stepper,camera,imgUtil,100,400,300);
+takeSampleUtil.sampleAndImg(stepper,camera,imgUtil,100,100,200);
 
-
+takeSampleUtil.showImage(imgUtil);
