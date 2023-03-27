@@ -20,7 +20,7 @@ classdef sonyDMM37UX226 < handle
         % Pass in a number if there are multiple cameras connected to the
         % same computer
         function initialize(this)
-            this.videoObject = videoinput('winvideo',1,this.format);
+            this.videoObject = videoinput('winvideo','2',this.format);
             disp("Made video object")
             
             this.videoSource = getselectedsource(this.videoObject);
@@ -29,7 +29,7 @@ classdef sonyDMM37UX226 < handle
             triggerconfig(this.videoObject,'manual');
             set(this.videoObject,'FramesPerTrigger',this.framesPerTrigger);
     
-            set(this.videoSource,'FrameRate','15.0000');
+            set(this.videoSource,'FrameRate','5.0000');
             set(this.videoSource,'Exposure',this.exposureTime);
     
     
@@ -39,8 +39,11 @@ classdef sonyDMM37UX226 < handle
             % initialize the dataImage with the correct size. This makes
             % calls to grabImage much faster
             trigger(this.videoObject);
+            %Add a pause for slower computers (Can be important)
+            pause(20) %in seconds
+            disp("Where I expet problem 1");
             this.dataImage = getdata(this.videoObject,1);
-            
+            disp("Where I expet problem 2");
     
         end
     
