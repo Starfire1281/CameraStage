@@ -13,6 +13,8 @@ classdef takeSampleUtil
             cam.grabImage();
             disp("grabImage")
             imgSav.setImage(cam);
+            workspaceImage = cam.dataImage;
+            imwrite(workspaceImage,"copyImage.bmp");
             disp("setImage")
             imgSav.saveImage();
             disp(cam.n);
@@ -20,6 +22,7 @@ classdef takeSampleUtil
         end
 
         function showImage(imgSav)
+            figure();
             imagesc(imgSav.image);
         end
 

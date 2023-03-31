@@ -20,6 +20,8 @@ classdef stepperController < handle
       %Real space limit's of stage
       Xlength = 20;
       Ylength = 20;
+      %figure for activex controller
+      f
    end
    methods (Access = public)
         %Constructor
@@ -28,7 +30,7 @@ classdef stepperController < handle
             fpos    = get(0,'DefaultFigurePosition'); % figure default position
             fpos(3) = 650; % figure window size;Width
             fpos(4) = 450; % Height
-            f = figure('Position', fpos,...
+            this.f = figure('Position', fpos,...
            'Menu','None',...
            'Name','APT GUI');
         
