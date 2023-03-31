@@ -10,7 +10,7 @@ classdef imageProcessing < handle
 
     properties (Access = private)%cuz I have nice getters and setters
         %The experimental parameters, this includes images and distances
-        ex = experiment;
+        ex
         df
         wv
         %UnitConstant object
@@ -25,6 +25,7 @@ classdef imageProcessing < handle
         % The intention is to make this object once for a given run, then modify what data it
         % has.
         function obj = imageProcessing(varargin)
+            obj.ex = experiment;
             switch nargin
                 case 0
                     %   Make an empty imageProcessing object to modify later
@@ -46,7 +47,7 @@ classdef imageProcessing < handle
         function loadImageDataFromFile(obj)
             disp("Please select the folder you would like to load images from");
             imagesPath = uigetdir("./ImageFiles");
-            imageFiles = dir([imagesPath '/*.bmp']);
+            imageFiles = dir([imagesPath '/*.png']);
             obj.ex.numberOfPositions = length(imageFiles);
             imageData = zeros(obj.ex.dimensionsDataX,obj.ex.dimensionsDataY,obj.ex.numberOfPositions);
             for i = 1:(obj.ex.numberOfPositions)
