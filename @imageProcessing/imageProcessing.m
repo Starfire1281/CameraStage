@@ -10,10 +10,12 @@ classdef imageProcessing < handle
 
     properties (Access = private)%cuz I have nice getters and setters
         %The experimental parameters, this includes images and distances
-        ex;
+        ex = experiment;
+        df
+        wv
         %UnitConstant object
-        u;
-        %The assocciated shifts
+        u = unitsConstants.unitsSI;
+        %The associated shifts
         pixelShifts;
         %Number of photos
         numImages;
@@ -26,14 +28,16 @@ classdef imageProcessing < handle
             switch nargin
                 case 0
                     %   Make an empty imageProcessing object to modify later
-                    createExperiment(obj);
                 case 5
                     %   Create one using everything!
-                    %dimensionsDataX (pixel size of detector),detectorPixelSize (actual size of each pixel),lambda,distanceObject2Diffuser,distanceDiffuser2Detector
-                    createExperiment(obj,varargin{1},varargin{2},varargin{3},varargin{4},varargin{5})
+                    %dimensionsDataXY (size of detector in pixels),detectorPixelSize (actual size of each pixel),lambda,distanceObject2Diffuser,distanceDiffuser2Detector
+                    obj.setDimensionsData(varargin{1}(1),varargin{1}(2));
+                    obj.setDetectorPixelSize(varargin{2}(1),varargin{2}(2));
+                    obj.setWavelength(varargin{3});
+                    obj.setMicroscopeDistances(varargin{4},varargin{5});
+                    obj.mkDfWv;
                 otherwise
-                    disp(nargin)
-                    error('ImageProcessing accepts 0 or 5 input arguments!')
+                    error('ImageProcessing:InvalidArguments', 'ImageProcessing constructor expects 5 arguments!');
             end
         end
 
@@ -50,6 +54,7 @@ classdef imageProcessing < handle
             end
             obj.setImageData(imageData);
         end
+
         %Convolve the loaded images
         function convolveFromData(obj)
             %This convolves our data from our image data
@@ -60,6 +65,27 @@ classdef imageProcessing < handle
                 [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = findShift2Images(image1,image2);
             end
         end
+
+        %Create diffuser and wave class randomizing them
+        %Danger! number of Modes wave and number of wavelength currently
+        %hard coded
+        function mkDfWv(obj)
+            %Diffiser gen
+            obj.df = diffuserClass(obj.ex);
+            obj.df.diffuserTypeString = "random";
+            obj.df.generateDiffuser();
+            %Wave gen
+            %obj.ex.numberOfWavelengths = 1;     %!!!!!!!!!!
+            obj.wv = waveClass(obj.ex);
+            disp(size(obj.wv.propagationPhase));
+            %obj.wv.numberOfModesWave = 1;       %!!!!!!!!!!
+            obj.wv.generateWaveFromConstant();
+            obj.wv.dataWave = rand(size(obj.wv.dataWave)) .* exp(1i*rand(size(obj.wv.dataWave)));
+        end
+
+        %Run Dan's code
+        %function runPtychographyAlgorithm(obj)
+            
 
         %Display our data
         function displayPixelPositions(obj)
@@ -113,28 +139,4 @@ classdef imageProcessing < handle
             imageFrame = obj.ex.dataDiffraction(:,:,frameNum);
         end
     end
-
-    methods (Access = private)
-        function createExperiment(obj,varargin)
-            %Regardless set up experiment and units
-            obj.ex = experiment();
-            obj.u = unitsConstants.unitsSI;
-            switch nargin
-                %Room for extra cases
-                case 1
-                case 6
-                    %dimensionsData (pixel size of detector),detectorPixelSize (actual size of each pixel),lambda,distanceObject2Diffuser,distanceDiffuser2Detector
-                    obj.ex = experiment();
-                    obj.u = unitsConstants.unitsSI;
-                    %Set camera parameters
-                    obj.setDimensionsData(varargin{1}(1),varargin{1}(2));
-                    obj.setDetectorPixelSize(varargin{2}(1),varargin{2}(2));
-                    obj.setWavelength(varargin{3});
-                    obj.setMicroscopeDistances(varargin{4},varargin{5});
-                otherwise
-                    error('createExperiment accepts 1 or 5 input arguments!')
-            end
-        end
-    end
 end
-
