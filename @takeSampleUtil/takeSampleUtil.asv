@@ -70,7 +70,7 @@ classdef takeSampleUtil
                 disp(i);
             end
             disp("Move sequence completed");
-            close(stepper.f);
+            close(stepper.f
         end
 
     end
