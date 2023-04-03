@@ -9,15 +9,11 @@ classdef takeSampleUtil
 
         function picAndSave(cam,imgSav)
             imgSav.setIndex();
-            disp("setIndex")
             cam.grabImage();
-            disp("grabImage")
             imgSav.setImage(cam);
             workspaceImage = cam.dataImage;
             imwrite(workspaceImage,"copyImage.bmp");
-            disp("setImage")
             imgSav.saveImage();
-            disp(cam.n);
             cam.n = cam.n + 1;
         end
 
@@ -32,15 +28,12 @@ classdef takeSampleUtil
             %Region is in same units as step size.
             %Can adjust to physical measurements later on once calibrating is setup
             stepper.setRegionSizeSteps(regionSizeX,regionSizeY);
-            stepper.setRegionSizeNorm(regionSizeX,regionSizeY,stepSize)
+            stepper.setRegionSizeNorm(regionSizeX,regionSizeY,stepSize);
 
             %Stepper moves down, left, down, right, taking images after each movement
             %until the full range of the sample is traveled
-            disp("Set regions")
-
-
+            
             for i = 1:stepper.normRegY
-                disp("Loops Starting")
                 if mod(i,2) ~= 0
                     if i == 1
                         disp("Take Picture");

@@ -35,7 +35,7 @@ classdef stepperController < handle
            'Name','APT GUI');
         
             %Instanciate the controller itself
-            this.activeXcontroller = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'}); %#ok<ACTXC> 
+            this.activeXcontroller = actxcontrol('APTPZMOTOR.APTPZMotorCtrl.1',[20 20 600 400 ], this.f, {'MoveComplete' 'MoveCompleteHandler'; 'MoveStopped' 'MoveStoppedHandler'}); %#ok<ACTXC> 
             %Make it start controlling
             this.activeXcontroller.StartCtrl;
             %Give it the serial number of our driver (change the number if hardware changes)
@@ -58,18 +58,18 @@ classdef stepperController < handle
             pause(3);
             
             %Set our class variables
-            this.activeXcontroller.SetJogStepSize(1,stepSize)
-            this.activeXcontroller.SetJogStepSize(2,stepSize)
+            this.activeXcontroller.SetJogStepSize(1,stepSize);
+            this.activeXcontroller.SetJogStepSize(2,stepSize);
         end
         %Moves the motor connected to channel channel through this controler, stepSize steps, in the direction direction
         %Note, direction can be 1 or 2
         %Channel 0 is X channel 1 is Y
         function moveSampleArray(this,stepSize,channel,direction)
             %global Movevar
-            this.activeXcontroller.SetJogStepSize(channel,stepSize)
-            this.activeXcontroller.MoveJog(channel,direction)
+            this.activeXcontroller.SetJogStepSize(channel,stepSize);
+            this.activeXcontroller.MoveJog(channel,direction);
             %Movevar = true;
-            setMovevar(true)
+            setMovevar(true);
             t=0;
             while 1
                 if getMovevar() == 0
@@ -85,7 +85,7 @@ classdef stepperController < handle
         %Character eased move
         function moveSampleChar(this,stepSize,charDir)
             [channel,direction] = dirChar(charDir);
-            moveSampleArray(this,stepSize,channel,direction)
+            moveSampleArray(this,stepSize,channel,direction);
             pause(1);
         end
         %Set move size in steps
@@ -95,7 +95,7 @@ classdef stepperController < handle
         %Just move without changing step size
         function simpleMove(this,charDir)
             [channel,direction] = dirChar(charDir);
-            moveSampleArray(this,channel,direction)
+            moveSampleArray(this,channel,direction);
         end
         %Sets the x and y size of the region of sample movenment we want to take a picture of, in number of total steps directly
         function setRegionSizeSteps(this,x,y)

@@ -2,4 +2,4 @@ addpath('C:\Users\mgarc\Downloads\Ptychography-master\Ptychography-master')
 addpath(genpath('C:\Users\mgarc\Downloads\CameraStage_0.1.2'))
 addpath('C:\Users\mgarc\Downloads\Ptychography-master\Ptychography-master\codedPtychography')
 addpath('C:\Users\mgarc\Downloads\CameraStage_0.1.2\Tests\')
-
+addpath('C:\Users\mgarc\Downloads\Ptychography-master\Ptychography-master\codedPtychography\cpm_v1.0')

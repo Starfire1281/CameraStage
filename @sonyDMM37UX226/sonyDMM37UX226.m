@@ -20,7 +20,7 @@ classdef sonyDMM37UX226 < handle
         % Pass in a number if there are multiple cameras connected to the
         % same computer
         function initialize(this)
-            this.videoObject = videoinput('winvideo','2',this.format);
+            this.videoObject = videoinput('winvideo','1',this.format);
             disp("Made video object")
             
             this.videoSource = getselectedsource(this.videoObject);
