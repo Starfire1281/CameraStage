@@ -8,7 +8,7 @@ classdef imageProcessing < handle
 
     %TODO: Figure out how to map out the original path.
 
-    properties (Access = public)%cuz I have nice getters and setters
+    properties (Access = private)%cuz I have nice getters and setters
         %The experimental parameters, this includes images and distances
         ex
         df
@@ -60,9 +60,9 @@ classdef imageProcessing < handle
         function convolveFromData(obj)
             %This convolves our data from our image data
             obj.pixelShifts = zeros(2,obj.numImages-1);
-            image1 = obj.getImageFrame(1)
+            image1 = obj.getImageFrame(1);
             for i = 2:(obj.numImages)
-                image2 = obj.getImageFrame(i)
+                image2 = obj.getImageFrame(i);
                 [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = findShift2Images(image1,image2);
             end
         end
@@ -198,7 +198,7 @@ classdef imageProcessing < handle
             
             end
                 
-        end
+                    end
     end
 
 
