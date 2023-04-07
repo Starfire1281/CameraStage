@@ -4,6 +4,7 @@ Download:
 * MATLAB Image Acquisition Toolbox Support Package for OS Generic Video Interface
 * MATLAB Image Processing Toolbox
 * All files within this repository
+* Dan Adams' Ptychography repository
 
 # Things to be wary of 
 * Software is dependent on knowing the number of cameras connected to the computer. Modify 
