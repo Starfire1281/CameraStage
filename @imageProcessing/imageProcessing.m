@@ -17,8 +17,6 @@ classdef imageProcessing < handle
         u = unitsConstants.unitsSI;
         %The associated shifts
         pixelShifts;
-        %Number of photos
-        numImages;
     end
     
     methods (Access = public)
@@ -59,11 +57,14 @@ classdef imageProcessing < handle
         %Convolve the loaded images
         function convolveFromData(obj)
             %This convolves our data from our image data
-            obj.pixelShifts = zeros(2,obj.numImages-1);
-            image1 = obj.getImageFrame(1)
-            for i = 2:(obj.numImages)
-                image2 = obj.getImageFrame(i)
-                [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = findShift2Images(image1,image2);
+            obj.pixelShifts = zeros(2,obj.ex.numberOfPositions-1);
+            image1 = obj.getImageFrame(1);
+            for i = 2:(obj.ex.numberOfPositions)
+                image2 = obj.getImageFrame(i);
+                [shiftx,shifty] = findShift2Images(image1,image2);
+                disp("Shift x = ",shiftx);
+                disp("Shift y = ",shifty);
+                [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = [shiftx,shifty];
             end
         end
 
@@ -76,10 +77,10 @@ classdef imageProcessing < handle
             obj.df.diffuserTypeString = "random";
             obj.df.generateDiffuser();
             %Wave gen
-            %obj.ex.numberOfWavelengths = 1;     %!!!!!!!!!!
+            obj.ex.numberOfWavelengths = 1;     %!!!!!!!!!!
             obj.wv = waveClass(obj.ex);
             disp(size(obj.wv.propagationPhase));
-            %obj.wv.numberOfModesWave = 1;       %!!!!!!!!!!
+            obj.wv.numberOfModesWave = 1;       %!!!!!!!!!!
             obj.wv.generateWaveFromConstant();
             obj.wv.dataWave = rand(size(obj.wv.dataWave)) .* exp(1i*rand(size(obj.wv.dataWave)));
         end
