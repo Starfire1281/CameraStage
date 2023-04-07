@@ -43,19 +43,27 @@ classdef takeSampleUtil
                         stepper.moveSampleChar(stepSize,'d');
                         disp("Moving Down")
                         takeSampleUtil.picAndSave(cam,imgSav);
+                        takeSampleUtil.picAndSave(cam,imgSav);%Remove later, added 4/7 to fix image brightness drift
+                        takeSampleUtil.picAndSave(cam,imgSav);
                     end
                     for j = 1:stepper.normRegX
                     stepper.moveSampleChar(stepSize,'l');
                     disp("Moving Left");
                     takeSampleUtil.picAndSave(cam,imgSav);
+                    takeSampleUtil.picAndSave(cam,imgSav);%Remove later, added 4/7 to fix image brightness drift
+                    takeSampleUtil.picAndSave(cam,imgSav);
                     end
                 else 
                     stepper.moveSampleChar(stepSize,'d');
+                    takeSampleUtil.picAndSave(cam,imgSav);
+                    takeSampleUtil.picAndSave(cam,imgSav);%Remove later, added 4/7 to fix image brightness drift
                     takeSampleUtil.picAndSave(cam,imgSav);
                     disp("Moving Down");
                     for j = 1:stepper.normRegX
                         stepper.moveSampleChar(stepSize,'r');
                         disp("Moving Right")
+                        takeSampleUtil.picAndSave(cam,imgSav);
+                        takeSampleUtil.picAndSave(cam,imgSav);%Remove later, added 4/7 to fix image brightness drift
                         takeSampleUtil.picAndSave(cam,imgSav);
                     end
                 end
