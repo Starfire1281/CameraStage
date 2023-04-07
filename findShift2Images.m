@@ -11,7 +11,7 @@ function [xShift,yShift] = findShift2Images(a,b)
     B = nfft2(b);
 
     CC = abs( nifft2(A.*conj(B)) );
-    imagesc(CC)
+    %imagesc(CC)
 
     [~,idx]=max(CC(:));
     [yShift,xShift] = ind2sub(size(CC),idx);

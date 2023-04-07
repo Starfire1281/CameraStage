@@ -8,10 +8,10 @@ toc
 
 tic
 camera.initialize();
-takeSampleUtil.setup(imgUtil,"TestMarch31_4x4");
+takeSampleUtil.setup(imgUtil,"TestApril5_5x5");
 toc
 
-takeSampleUtil.sampleAndImg(stepper,camera,imgUtil,100,400,400);
+takeSampleUtil.sampleAndImg(stepper,camera,imgUtil,100,500,500);
 
 takeSampleUtil.showImage(imgUtil);
 
