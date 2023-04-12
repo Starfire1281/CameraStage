@@ -8,7 +8,7 @@ toc
 
 tic
 camera.initialize();
-takeSampleUtil.setup(imgUtil,"DiffuserOnly4x4_April12");
+takeSampleUtil.setup(imgUtil,"Ba");
 toc
 
 takeSampleUtil.sampleAndImg(stepper,camera,imgUtil,100,400,400);
