@@ -28,10 +28,10 @@ classdef imageSaving < handle
         
         function setFullFilePath(this,varargin)
             if nargin == 1
-                this.fullFilePath = "ImageFiles\"+ this.sampleFolder + "\Image" + this.index + ".png";
+                this.fullFilePath = "Executables\ImageFiles\"+ this.sampleFolder + "\Image" + this.index + ".png";
             elseif nargin == 2
                 disp(nargin)
-                this.fullFilePath = "ImageFiles\"+ this.sampleFolder + "\Image" + varargin{1} + ".png";
+                this.fullFilePath = "Executables\ImageFiles\"+ this.sampleFolder + "\Image" + varargin{1} + ".png";
             else 
                 error("setFilePath requires one or two arguments only")
             end
