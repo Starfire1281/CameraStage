@@ -60,7 +60,6 @@ classdef takeSampleUtil
                     end
                 end
                 disp("Loop Complete");
-                disp(i);
             end
             disp("Move sequence completed");
             close(stepper.f);

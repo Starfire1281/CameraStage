@@ -30,7 +30,6 @@ classdef imageSaving < handle
             if nargin == 1
                 this.fullFilePath = "Executables\ImageFiles\"+ this.sampleFolder + "\Image" + this.index + ".png";
             elseif nargin == 2
-                disp(nargin)
                 this.fullFilePath = "Executables\ImageFiles\"+ this.sampleFolder + "\Image" + varargin{1} + ".png";
             else 
                 error("setFilePath requires one or two arguments only")
@@ -56,7 +55,7 @@ classdef imageSaving < handle
         end
 
         function saveImage(this)
-            imagesc(this.image)
+            imagesc(this.image);
             imwrite(this.image,this.fullFilePath,"BitDepth",16);
         end
 
