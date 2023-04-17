@@ -140,6 +140,15 @@ classdef imageProcessing < handle
         function imageFrame = getImageFrame(obj,frameNum)
             imageFrame = obj.ex.dataDiffraction(:,:,frameNum);
         end
+
+        %Normalize one image to another
+        function normalizedImage = normImageRelative(this,index2norm,indexBase)
+            im2norm = this.getImageFrame(index2norm);
+            imBase = this.getImageFrame(indexBase);
+            normalizedImage = (im2norm * sum(im2norm,"all"))/sum(imBase,"all");
+        end
+
+        %Run ptychography code from Dan
         function runPtych(obj)
             cpm = matCPM(obj.ex,obj.wv,obj.df);
             
