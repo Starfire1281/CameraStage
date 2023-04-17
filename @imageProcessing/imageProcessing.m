@@ -42,9 +42,19 @@ classdef imageProcessing < handle
 
 
         %Load An Image Set Into Our Image Processing Object
-        function loadImageDataFromFile(obj)
-            disp("Please select the folder you would like to load images from");
-            imagesPath = uigetdir("./ImageFiles");
+        function loadImageDataFromFile(obj,varargin)
+            switch nargin
+                case 0
+                    disp("Jet you f*cked up on line 48 of impross");
+                case 1
+                    disp("Please select the folder you would like to load images from");
+                    imagesPath = uigetdir("./ImageFiles");
+                    fprintf("Opening folder from directory: %s", imagesPath);
+                case 2
+                    disp("Loading from specified file");
+                    imagesPath = varargin{1};
+                    fprintf("Opening folder from directory: %s", imagesPath);
+            end
             imageFiles = dir([imagesPath '/*.png']);
             obj.ex.numberOfPositions = length(imageFiles);
             imageData = zeros(obj.ex.dimensionsDataX,obj.ex.dimensionsDataY,obj.ex.numberOfPositions);

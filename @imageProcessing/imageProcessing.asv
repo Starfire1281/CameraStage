@@ -8,7 +8,7 @@ classdef imageProcessing < handle
 
     %TODO: Figure out how to map out the original path.
 
-    properties (Access = private)%cuz I have nice getters and setters
+    properties (Access = public)%cuz I have nice getters and setters
         %The experimental parameters, this includes images and distances
         ex
         df
@@ -17,8 +17,6 @@ classdef imageProcessing < handle
         u = unitsConstants.unitsSI;
         %The associated shifts
         pixelShifts;
-        %Number of photos
-        numImages;
     end
     
     methods (Access = public)
@@ -44,7 +42,7 @@ classdef imageProcessing < handle
 
 
         %Load An Image Set Into Our Image Processing Object
-        function loadImageDataFromFile(obj)
+        function loadImageDataFromFile(obj,varargin)
             disp("Please select the folder you would like to load images from");
             imagesPath = uigetdir("./ImageFiles");
             imageFiles = dir([imagesPath '/*.png']);
@@ -59,11 +57,14 @@ classdef imageProcessing < handle
         %Convolve the loaded images
         function convolveFromData(obj)
             %This convolves our data from our image data
-            obj.pixelShifts = zeros(2,obj.numImages-1);
+            obj.pixelShifts = zeros(2,obj.ex.numberOfPositions-1);
             image1 = obj.getImageFrame(1);
-            for i = 2:(obj.numImages)
+            for i = 2:(obj.ex.numberOfPositions)
                 image2 = obj.getImageFrame(i);
-                [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = findShift2Images(image1,image2);
+                [shiftx,shifty] = findShift2Images(image1,image2);
+                disp("Shift x = ",shiftx);
+                disp("Shift y = ",shifty);
+                [obj.pixelShifts(1,i-1),obj.pixelShifts(2,i-1)] = [shiftx,shifty];
             end
         end
 
@@ -76,10 +77,10 @@ classdef imageProcessing < handle
             obj.df.diffuserTypeString = "random";
             obj.df.generateDiffuser();
             %Wave gen
-            %obj.ex.numberOfWavelengths = 1;     %!!!!!!!!!!
+            obj.ex.numberOfWavelengths = 1;     %!!!!!!!!!!
             obj.wv = waveClass(obj.ex);
             disp(size(obj.wv.propagationPhase));
-            %obj.wv.numberOfModesWave = 1;       %!!!!!!!!!!
+            obj.wv.numberOfModesWave = 1;       %!!!!!!!!!!
             obj.wv.generateWaveFromConstant();
             obj.wv.dataWave = rand(size(obj.wv.dataWave)) .* exp(1i*rand(size(obj.wv.dataWave)));
         end
@@ -139,6 +140,15 @@ classdef imageProcessing < handle
         function imageFrame = getImageFrame(obj,frameNum)
             imageFrame = obj.ex.dataDiffraction(:,:,frameNum);
         end
+
+        %Normalize one image to another
+        function normalizedImage = normImageRelative(this,index2norm,indexBase)
+            im2norm = this.getImageFrame(index2norm);
+            imBase = this.getImageFrame(indexBase);
+            normalizedImage = (im2norm * sum(im2norm,"all"))/sum(imBase,"all");
+        end
+
+        %Run ptychography code from Dan
         function runPtych(obj)
             cpm = matCPM(obj.ex,obj.wv,obj.df);
             
@@ -198,7 +208,7 @@ classdef imageProcessing < handle
             
             end
                 
-                    end
+        end
     end
 
 
